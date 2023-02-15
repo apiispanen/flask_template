@@ -4,7 +4,6 @@ wave
 google-cloud
 requests
 openai
-json
 click==7.1.2
 Flask
 gunicorn==20.0.4
