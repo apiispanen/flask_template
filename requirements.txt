@@ -1,3 +1,14 @@
+pygame
+pyaudio
+wave
+google.cloud
+requests
+subprocess
+sys
+os
+openai
+json
+tkinter
 click==7.1.2
 Flask==1.1.2
 gunicorn==20.0.4
