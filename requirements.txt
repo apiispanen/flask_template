@@ -1,5 +1,5 @@
 pygame
-pyaudio
+pyaudio==0.2.13
 wave
 google-cloud
 requests
