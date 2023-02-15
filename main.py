@@ -1,3 +1,5 @@
+print("************************************ RUNNING MAIN FILE ************************************")
+
 import pyaudio
 import wave
 import os

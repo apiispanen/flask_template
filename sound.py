@@ -1,3 +1,4 @@
+print("************************************ RUNNING SOUND FILE ************************************")
 # Import the necessary modules.
 import subprocess
 import sys
