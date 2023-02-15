@@ -48,7 +48,6 @@ google-cloud-speech==2.17.3
 google-cloud-texttospeech==2.14.1
 googleapis-common-protos==1.56.4
 grpcio==1.51.1
-grpcio-status==1.51.1
 gspread==5.5.0
 gspread-dataframe==3.3.0
 h11==0.13.0
@@ -100,8 +99,6 @@ pipreqs==0.4.11
 plotly==5.10.0
 prometheus-client==0.14.1
 prompt-toolkit==3.0.31
-proto-plus==1.22.2
-protobuf==4.21.12
 psutil==5.9.2
 pure-eval==0.2.2
 pyarrow==9.0.0
@@ -146,7 +143,6 @@ soupsieve==2.3.1
 splinter==0.17.0
 stack-data==0.5.0
 statsmodels==0.13.2
-streamlit==1.12.2
 tenacity==8.0.1
 terminado==0.15.0
 threadpoolctl==3.1.0
