@@ -82,7 +82,7 @@ def save_audio():
 
 if __name__ == "__main__":
     # app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(debug=True, port=os.getenv("PORT", default=5000))
+    app.run(debug=True, port=int(os.getenv("PORT", default=5000)))
 
 
 
