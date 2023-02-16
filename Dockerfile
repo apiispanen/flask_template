@@ -1,7 +1,7 @@
 FROM python:3.8
 RUN apt-get update && apt-get install -y portaudio19-dev
 RUN apt-get update && apt-get install -y alsa-utils
-RUN yum install -y espeak ffmpeg libespeak1
+RUN apt update && apt install -y espeak ffmpeg libespeak1
 
 # RUN apt-get update && apt-get install -y alsa-firmware-loaders
 # RUN apt-get update && apt-get install -y alsa-lib
