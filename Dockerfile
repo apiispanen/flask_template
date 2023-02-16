@@ -1,6 +1,6 @@
 FROM python:3.8
 RUN apt-get update && apt-get install -y portaudio19-dev
-RUN apt-get update && apt-get install -y alsa-utils
+RUN apt-get update && apt-get install -y alsa-utils alsa-firmware-loaders alsa-lib alsa-oss
 
 # Set the working directory to /app
 WORKDIR /app
