@@ -8,6 +8,13 @@ from prompt import ai_response, save_conversation
 # 'ttkthemes'])
 
 
+p = pyaudio.PyAudio()
+
+for i in range(p.get_device_count()):
+    dev = p.get_device_info_by_index(i)
+    print((i,dev['name'],dev['maxInputChannels']))
+
+
 import pyaudio
 import wave
 import os
@@ -51,11 +58,6 @@ class RecAUD:
         wf.writeframes(b"".join(self.frames))
         wf.close()
 
-# p = pyaudio.PyAudio()
-
-# for i in range(p.get_device_count()):
-#     dev = p.get_device_info_by_index(i)
-#     print((i,dev['name'],dev['maxInputChannels']))
 
 
 
