@@ -1,5 +1,4 @@
 wheel
-Flask==1.1.2
 openai==0.26.4
 protobuf==4.21.12
 PyAudio==0.2.13
