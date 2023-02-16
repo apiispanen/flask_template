@@ -1,8 +1,10 @@
 FROM python:3.8
 RUN apt-get update && apt-get install -y portaudio19-dev
 RUN apt-get update && apt-get install -y alsa-utils
-RUN apt update && apt install -y espeak ffmpeg libespeak1
+RUN mkdir -p /usr/share/alsa/ucm/chtrt5645/
+COPY ./chtrt5645.conf /usr/share/alsa/ucm/chtrt5645/
 
+# RUN apt update && apt install -y espeak ffmpeg libespeak1
 # RUN apt-get update && apt-get install -y alsa-firmware-loaders
 # RUN apt-get update && apt-get install -y alsa-lib
 RUN apt-get update && apt-get install -y alsa-oss
