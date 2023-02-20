@@ -10,17 +10,11 @@ RUN apt-get update \
         portaudio19-dev \
     && rm -rf /var/lib/apt/lists/*
 
-
-
-# RUN apt update && apt install -y espeak ffmpeg libespeak1
-# RUN apt-get update && apt-get install -y alsa-firmware-loaders
-# RUN apt-get update && apt-get install -y alsa-lib
-
+RUN bash -c 'source /etc/profile.d/alsa.sh'
 RUN alsa force-reload
 
 # Clean up the package manager cache
 RUN rm -rf /var/lib/apt/lists/*
-
 
 # Set the working directory to /app
 WORKDIR /app
