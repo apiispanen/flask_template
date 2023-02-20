@@ -1,5 +1,7 @@
 FROM python:3.8
 RUN apt-get update && apt-get install -y portaudio19-dev
+RUN apt-get update && apt-get install -y alsa-utils
+
 # Update the package manager and install necessary dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
