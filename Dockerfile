@@ -3,16 +3,18 @@ RUN apt-get update && apt-get install -y portaudio19-dev
 # Update the package manager and install necessary dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        alsa-utils \
         libasound2-dev \
-        portaudio19-dev
+        portaudio19-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 
 
 # RUN apt update && apt install -y espeak ffmpeg libespeak1
 # RUN apt-get update && apt-get install -y alsa-firmware-loaders
 # RUN apt-get update && apt-get install -y alsa-lib
-RUN apt-get update && apt-get install -y alsa-oss
-RUN apt-get update && apt-get install -y alsa-utils
+
+RUN alsa force-reload
 
 # Clean up the package manager cache
 RUN rm -rf /var/lib/apt/lists/*
