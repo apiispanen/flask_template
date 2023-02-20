@@ -12,6 +12,7 @@ RUN apt-get update \
 # RUN apt-get update && apt-get install -y alsa-firmware-loaders
 # RUN apt-get update && apt-get install -y alsa-lib
 RUN apt-get update && apt-get install -y alsa-oss
+RUN apt-get update && apt-get install -y alsa-utils
 
 # Clean up the package manager cache
 RUN rm -rf /var/lib/apt/lists/*
