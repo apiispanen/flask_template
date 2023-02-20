@@ -1,8 +1,6 @@
 FROM python:3.8
-RUN apt-get update && apt-get install -y portaudio19-dev
-RUN apt-get update && apt-get install -y alsa-utils
 
-# Update the package manager and install necessary dependencies
+# Install dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         alsa-utils \
@@ -10,17 +8,14 @@ RUN apt-get update \
         portaudio19-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN bash -c 'source /etc/profile.d/alsa.sh'
-RUN alsa force-reload
-
-# Clean up the package manager cache
-RUN rm -rf /var/lib/apt/lists/*
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Reload alsa configuration
+RUN bash -c 'source /etc/profile.d/alsa.sh'
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
