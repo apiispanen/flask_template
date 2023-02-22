@@ -11,6 +11,8 @@ from tts import tts
 # import pydub
 from flask import Flask, request, render_template, jsonify
 from sound import *
+from flask import session
+
 
 
 print('enter getJSONReuslt', flush=True)
@@ -20,7 +22,7 @@ app.config["CACHE_TYPE"] = "null"
 
 @app.route('/')
 def index():
-    return render_template('indexs.html')
+    return render_template('voice.html')
 
 @app.route('/startRecording')
 def startRecording(guiAUD=guiAUD):
@@ -36,16 +38,41 @@ def stopRecording(guiAUD=guiAUD):
     response = ai_response(transcript)
     tts(response)
     return 'Off'
-    
+
+# @app.route("/run_audio", methods=['POST'])
+# def run_audio():
+#     print("************************running AUDIO ****")
+
+
 
 @app.route("/save_audio", methods=['POST'])
 def save_audio():
-    # Original function
-    audio = request.data
-    filename = 'temp/post_output.mp3'
-    with open(filename, "wb") as f:
-        f.write(audio)
-    f.close()
+
+    # process the audio data here
+    print("Running save_audio() function")
+    
+    # mark the function as called
+    session['audio_saved'] = True
+    
+    # read the audio data from the request body
+    words = request.json['words']
+    prompt = ' '.join([word['value'] for word in words if word])
+    print("YOUR PROMPT:", prompt)
+    response = ai_response(prompt, networking=True)
+    tts(response)
+    # do something with the audio data here
+    
+    # print(f"Received {len(prompt)} words of audio data")
+
+
+
+
+    return "Success"
+
+    # filename = 'temp/post_output.mp3'
+    # with open(filename, "wb") as f:
+    #     f.write(audio)
+    # f.close()
     ### Check if file is present: 
     # if os.path.isfile(filename) and os.access(filename, os.W_OK):
     #     print(f"{filename} exists and is writable")
@@ -60,7 +87,7 @@ def save_audio():
     # transcript, confidence = stt_object.transcript, stt_object.confidence
     # print(transcript, confidence)
     # print("Thinking...")
-    return "Audio saved."
+    # return "Audio saved."
 
     # return transcript
 
@@ -81,6 +108,7 @@ def save_audio():
 
 
 if __name__ == "__main__":
+    app.secret_key = 'mysecretkey'
     # app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(debug=True, port=int(os.getenv("PORT", default=5000)))
 
