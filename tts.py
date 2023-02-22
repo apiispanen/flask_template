@@ -15,7 +15,8 @@ Note: ssml must be well-formed according to:
 """
 from google.cloud import texttospeech_v1beta1 as texttospeech
 
-import pygame
+# import pygame
+import base64
 
 
 # Instantiates a client
@@ -53,15 +54,43 @@ def tts(text):
 
     # NOW PLAY IT BACK
 
-    pygame.init()
-    pygame.mixer.init()
-    try:
-        pygame.mixer.music.load("temp/output.mp3")
-        pygame.mixer.music.play()
-    except:
-        pygame.mixer.music.load("temp/no.wav")
-        pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy():
-        pygame.time.wait(100)
-    pygame.quit()
+    # pygame.init()
+    # pygame.mixer.init()
+    # try:
+    #     pygame.mixer.music.load("temp/output.mp3")
+    #     pygame.mixer.music.play()
+    # except:
+    #     pygame.mixer.music.load("temp/no.wav")
+    #     pygame.mixer.music.play()
+    # while pygame.mixer.music.get_busy():
+    #     pygame.time.wait(100)
+    # pygame.quit()
 
+def tts_string(text):
+    # Set the text input to be synthesized
+    synthesis_input = texttospeech.SynthesisInput(text=text)
+
+    # Build the voice request
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="en-US",
+        name="en-GB-Standard-A",
+        ssml_gender=texttospeech.SsmlVoiceGender.FEMALE,
+    )
+
+    # Select the type of audio file you want returned
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3
+    )
+
+    # Perform the text-to-speech request on the text input with the selected
+    # voice parameters and audio file type
+    response = client.synthesize_speech(
+        input=synthesis_input, voice=voice, audio_config=audio_config
+    )
+
+    # Return the audio content as a base64-encoded string
+    audio_content = base64.b64encode(response.audio_content).decode("utf-8")
+    return audio_content
+
+
+# print(tts_link('Hello how are you'))

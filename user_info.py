@@ -52,6 +52,7 @@ def json_pull(name, filename="conversations.json"):
 
     closest_match = difflib.get_close_matches(search_name, name_list, n=1, cutoff=.4)
     if closest_match:
+        name = closest_match[0]
         print("We are assuming '", search_name, "' is", closest_match[0])
         print(data["People"][name])
         result = data["People"][name] 

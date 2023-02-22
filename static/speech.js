@@ -20,24 +20,22 @@ button.addEventListener("speechsegment", (e) => {
         words: words
       })
     })
-    .then(response => {
-      // Handle response from server
-      let url = '../temp/output.mp3';
-
-      // create an Audio object and set the source to the URL
-      let audio = new Audio(url);
-
-      // play the audio file
+      
+    .then(response => response.json())
+    .then(data => {
+      const audioContent = data.audioContent;
+      const audioSrc = `data:audio/mpeg;base64,${audioContent}`;
+      const audio = new Audio(audioSrc);
       audio.play();
-
-      console.log(response);
     })
     .catch(error => {
       console.error(error);
-    }); 
+    });
+
+
     }
 
-    
+    // OLD JS
     speechSegment.entities.forEach(entity => {
       
       let select = document.getElementById(entity.type);  
@@ -57,6 +55,11 @@ button.addEventListener("speechsegment", (e) => {
   });
 
   
+
+
+
+
+
 
 
 }

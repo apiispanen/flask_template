@@ -1,3 +1,3 @@
-API_KEY = "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"
+API_KEY = "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"
 
 GOOGLE_API = 'AIzaSyAy0hVk8XprJ4CjZvLcBe2BXXcSLzLuik8'

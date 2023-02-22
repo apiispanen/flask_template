@@ -5,13 +5,14 @@ import wave
 import os
 from stt import speech_to_text
 from prompt import *
-# from tts import tts
+from tts import tts, tts_string
 # import subprocess
 # import sys
 # import pydub
 from flask import Flask, request, render_template, jsonify
 # from sound import *
 from flask import session
+audioContent = ''
 
 print('enter getJSONReuslt', flush=True)
 
@@ -52,13 +53,16 @@ def save_audio():
     prompt = ' '.join([word['value'] for word in words if word])
     print("YOUR PROMPT:", prompt)
     response = ai_response(prompt, networking=True)
-    print(response)
-    # tts(response)
-    # do something with the audio data here
+    # print(response)
+
     
+    audioContent = tts_string(response)
+    # do something with the audio data here
+
     # print(f"Received {len(prompt)} words of audio data")
 
-    return "Success"
+    return jsonify({"audioContent": audioContent})
+
 
 
 
@@ -89,8 +93,11 @@ def save_audio():
 # if __name__ == "__main__":
 app.secret_key = 'mysecretkey'
 # app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
-# app.run(debug=True, port=int(os.getenv("PORT", default=5000)))
+# FOR RUNNING ON RAILWAY
+# app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+
+# FOR RUNNING ON LOCAL
+app.run(debug=False, port=int(os.getenv("PORT", default=5000)))
 
 # ai_response("What are 5 words to describe a grouchy fucking pig?")
