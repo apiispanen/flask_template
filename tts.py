@@ -15,9 +15,6 @@ Note: ssml must be well-formed according to:
 """
 from google.cloud import texttospeech_v1beta1 as texttospeech
 
-import pyaudio
-import wave
-
 import pygame
 
 
