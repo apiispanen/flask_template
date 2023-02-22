@@ -1,9 +1,9 @@
 import requests
 import os
-api_key = os.getenv('API_KEY')
+API_KEY = os.getenv('API_KEY')
 
-if api_key is not None:
-    print(f'The API key is {api_key}')
+if API_KEY is not None:
+    print(f'The API key is {API_KEY}')
 else:
     from creds import API_KEY
     print('The API_KEY environment variable is not set.')
