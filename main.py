@@ -20,7 +20,7 @@ app.config["CACHE_TYPE"] = "null"
 
 @app.route('/')
 def index():
-    return render_template('indexs.html')
+    return render_template('voice.html')
 
 @app.route('/startRecording')
 def startRecording(guiAUD=guiAUD):
@@ -40,12 +40,17 @@ def stopRecording(guiAUD=guiAUD):
 
 @app.route("/save_audio", methods=['POST'])
 def save_audio():
-    # Original function
-    audio = request.data
-    filename = 'temp/post_output.mp3'
-    with open(filename, "wb") as f:
-        f.write(audio)
-    f.close()
+    print("Running save_audio() function")
+    words = request.json['words']
+    print([word['value'] for word in words if word])
+    print("WORDS", words)
+    # process the audio data here
+    return "Success"
+
+    # filename = 'temp/post_output.mp3'
+    # with open(filename, "wb") as f:
+    #     f.write(audio)
+    # f.close()
     ### Check if file is present: 
     # if os.path.isfile(filename) and os.access(filename, os.W_OK):
     #     print(f"{filename} exists and is writable")
@@ -60,7 +65,7 @@ def save_audio():
     # transcript, confidence = stt_object.transcript, stt_object.confidence
     # print(transcript, confidence)
     # print("Thinking...")
-    return "Audio saved."
+    # return "Audio saved."
 
     # return transcript
 

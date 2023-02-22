@@ -11,11 +11,28 @@ var button = document.getElementsByTagName("push-to-talk-button")[0];
 
 //   return false;  });
   button.addEventListener("speechsegment", (e) => {
-    
     const speechSegment = e.detail;
-
-    console.log("WORDS",e.detail['words']);
+    const words = speechSegment['words'];
+  
+    console.log("WORDS", words);
     console.log(speechSegment.entities);
+
+      // Make POST request to save_audio endpoint
+  fetch('/save_audio', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      words: words
+    })
+  }).then(response => {
+    // Handle response from server
+    console.log(response);
+  }).catch(error => {
+    console.error(error);
+  });
+
     
     speechSegment.entities.forEach(entity => {
       
