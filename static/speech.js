@@ -2,36 +2,32 @@
 window.onload=function(){
  
 var button = document.getElementsByTagName("push-to-talk-button")[0];
-// button.addEventListener('mouseup', (e) => {
-//   e.preventDefault();
-//   for(var b in window) { 
-//     if(window.hasOwnProperty(b)) console.log(b); 
-//   }
 
+button.addEventListener("speechsegment", (e) => {
+  const speechSegment = e.detail;
 
-//   return false;  });
-  button.addEventListener("speechsegment", (e) => {
-    const speechSegment = e.detail;
-    const words = speechSegment['words'];
-  
-    console.log("WORDS", words);
-    console.log(speechSegment.entities);
+  // Check if the speech segment is the final segment
+  if (speechSegment.isFinal) {
+    const words = speechSegment.words;
 
-      // Make POST request to save_audio endpoint
-  fetch('/save_audio', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      words: words
+    // Make POST request to save_audio endpoint
+    fetch('/save_audio', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        words: words
+      })
     })
-  }).then(response => {
-    // Handle response from server
-    console.log(response);
-  }).catch(error => {
-    console.error(error);
-  });
+    .then(response => {
+      // Handle response from server
+      console.log(response);
+    })
+    .catch(error => {
+      console.error(error);
+    }); 
+    }
 
     
     speechSegment.entities.forEach(entity => {

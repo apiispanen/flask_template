@@ -60,8 +60,8 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     completions = openai.Completion.create(
         engine=model_engine,
         prompt=prompt,
-        max_tokens=256,
-        n=2,
+        max_tokens=200,
+        n=1,
         stop=None,
         temperature=temperature,
         frequency_penalty=1
