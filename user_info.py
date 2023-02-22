@@ -4,9 +4,10 @@ import json
 
 import difflib
 
-def google_it(search_term, other_info=""):
+def google_it(search_term, other_info=None):
     search_term = search_term.replace(' ', '%20')
-    other_info = other_info.replace(' ', '%20')+'%20"linkedin"'
+    if other_info:
+        other_info = '%20'.join(other_info)+'%20"linkedin"'
     print(search_term)
     url = f"https://www.google.com/search?q={search_term}%20{other_info}"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"}
@@ -58,7 +59,7 @@ def json_pull(name, filename="conversations.json"):
         result = data["People"][name] 
     else:
         print("No match found for", search_name)
-        result = "None given"
+        result = {"None given"}
     
     return dict({name:result})
 
@@ -68,15 +69,15 @@ def json_update(name, json_response, filename="conversations.json"):
         data = json.load(f)
     conversation_json = get_json(json_response)
     name_list = list(data["People"].keys())
-    closest_match = difflib.get_close_matches(name, name_list, n=1, cutoff=.4)
+    closest_match = difflib.get_close_matches(name, name_list, n=1, cutoff=.6)
     if closest_match:
         print("We are assuming '", name, "' is", closest_match[0])
         # print(data["People"][name])
         for key in conversation_json['People'][name]:
             data['People'][closest_match[0]][key] = conversation_json['People'][name][key]
     else:
-        print("No match found for ", name, "Adding new entry")
-        data["People"][name] = conversation_json['People'][name]
+        print("No match found for ", name, "Adding new entry with JSON response: ",conversation_json['People'][name])
+        data['People'][name] = conversation_json['People'][name]
         
 
     # Write the updated data back to the file

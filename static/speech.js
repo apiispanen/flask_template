@@ -30,9 +30,6 @@ button.addEventListener("speechsegment", (e) => {
 
 
 
-
-
-
   // Check if the speech segment is the final segment
   if (speechSegment.isFinal) {
     const words = speechSegment.words;
@@ -45,39 +42,65 @@ button.addEventListener("speechsegment", (e) => {
     // Set the value of the input element
     inputElement.value = wordsString;
   
-
-
     // Make POST request to save_audio endpoint
-    fetch('/save_audio', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        words: words
-      })
-    })
-      
-    .then(response => response.json())
-    .then(data => {
-      const audioContent = data.audioContent;
-      const audioSrc = `data:audio/mpeg;base64,${audioContent}`;
-      const audio = new Audio(audioSrc);
-      audio.play();
-    })
-    .catch(error => {
-      console.error(error);
-    });
-
-
+    save_audio(wordsString);
     }
 
 
   });
 
+
+// IF SOMEONE FILLS OUT THE PROMPT AND WANTS TO RESEND:
+  const responseTextArea = document.querySelector("#response textarea");
+
+// add an event listener for when the user submits the form
+responseTextArea.addEventListener("keydown", function(event) {
+  // check if the user pressed the "Enter" key
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const responseText = responseTextArea.value;
+    console.log(responseText);
+    // call your desired function here
+    save_audio(responseText);
+  }
+});
+
+// define the function that you want to perform
+function save_audio(words) {
+
+  // code to perform the desired function goes here
+  return fetch('/save_audio', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      words: words
+    })
+  })  .then(response => response.json())
+  .then(data => {
+    const audioContent = data.audioContent;
+    const audioSrc = `data:audio/mpeg;base64,${audioContent}`;
+    const audio = new Audio(audioSrc);
+    audio.play();
+  })
+  .catch(error => {
+    console.error(error);
+  });
   
+  
+  
+  
+  ;
+    
+  console.log("Your function has been performed!");
+}
 
 
+$(window).on("load resize ", function() {
+  var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+  $('.tbl-header').css({'padding-right':scrollWidth});
+}).resize();
 
 
 

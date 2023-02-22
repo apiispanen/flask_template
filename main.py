@@ -23,6 +23,15 @@ app.config["CACHE_TYPE"] = "null"
 def index():
     return render_template('voice.html')
 
+
+@app.route('/people')
+def people():
+    with open("conversations.json", "r") as f:
+        data = json.load(f)
+    it = iter(data['People']).__next__
+
+    return render_template('people.html', data=data, it=it)
+
 # @app.route('/startRecording')
 # def startRecording(guiAUD=guiAUD):
 #     guiAUD.startRecording()
@@ -49,8 +58,8 @@ def save_audio():
     session['audio_saved'] = True
     
     # read the audio data from the request body
-    words = request.json['words']
-    prompt = ' '.join([word['value'] for word in words if word])
+    prompt = request.json['words']
+    # prompt = ' '.join([word['value'] for word in words if word])
     print("YOUR PROMPT:", prompt)
     response = ai_response(prompt, networking=True)
     # print(response)

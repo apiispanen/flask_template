@@ -35,18 +35,28 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 
             if first_word in update_strings:
                 print("*** UPDATING USER ***")
-                prompt = """ONLY answer in JSON for a database called "People" that is in the following format, filling in the brackets with any relvant data? Omit the data that isn't found, and add new fields where possible: \n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]", etc. }}}  \nDo this based on the following conversation: \n\n The person's name is """+name+"\n DIALOG:" + prompt
-                print("UPDATE PROMPT: ",prompt)
+                prompt = """OBJECTIVE: JSON response for a database called "People" that is in the following format:\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this, can you fill in the brackets with any data THAT YOU ARE CERTAIN ABOUT? Omit fields that can't be found, and add new fields where possible.\n\n The person's name is """+name+"\n All of this will be created based on the following DIALOG:" + prompt
+                # print("UPDATE PROMPT: ",prompt)
 
 
             if first_word in reminder_strings:
                 print("*** RETRIEVING USER ***")
                 # What can you tell me about 
                 user_response = json_pull(name)
-                print("USER RESPONSE",user_response)
+                print("DATABASE (json_pull) RESPONSE",user_response)
                 cleaned_name = list(user_response.keys())[0]
                 user_json = user_response[cleaned_name]
-                their_results = google_it(cleaned_name)
+
+                keys =  ['School', 'Location', 'Company']
+                try:
+                    relevant_info = [user_json[key] for key in user_json.keys() if key in keys] 
+                except:
+                    relevant_info = []
+                if len(relevant_info)>0:
+                    print("relevant info: ", relevant_info)
+                else:
+                    relevant_info = None
+                their_results = google_it(cleaned_name, other_info=relevant_info)
                 print("GOOGLE RESULT: "+their_results)
 
                 prompt = "Based on their Linkedin header: "+str(their_results)+"\n and their json data:\n"+str(user_response)+'\n Can you briefly summarize the person?'
@@ -72,8 +82,9 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     )
 
     message = completions.choices[0].text
-    print(message)
-    if networking and first_word == "update":
+    print("Prompt:", prompt)
+    print("AI Response:", message)
+    if networking and first_word in update_strings:
         print("to feed into json_update:\n",name, message)
         json_update(name, message)
         print("******** JSON UPDATED ********")
@@ -113,7 +124,6 @@ def load_conversation():
             return all_prompts
     except:
         return {}
-
 
 
 

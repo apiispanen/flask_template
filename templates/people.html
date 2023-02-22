@@ -1,0 +1,78 @@
+{% set it = data['People'].__iter__() %}
+{% set next = it.__next__() %}
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My People Data</title>
+
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <script type="text/javascript" src="https://speechly.github.io/browser-ui/v2/push-to-talk-button.js"></script>
+      <script type="text/javascript" src="https://speechly.github.io/browser-ui/v2/big-transcript.js"></script>
+      <!-- <script type="text/javascript" src="../style/speech.js"></script> -->
+      <link rel="stylesheet" href="../static/style.css">
+  
+      <script src="{{url_for('static', filename='speech.js')}}"></script>
+  
+      <link rel="stylesheet" href="https://speechly.github.io/browser-ui/v2/speechly-ui.css">
+      <!-- <script src="{{url_for('static', filename='style.css')}}"></script> -->
+  
+
+
+
+  </head>
+  <body id="people">
+ 
+    <section>
+      <!--for demo wrap-->
+      <h1>People</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              
+              {% for field in data['People'][next] %}
+              <th>{{ field }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            {% for name, person in data['People'].items() %}
+            <tr>
+              <td>{{ name }}</td>
+              {% for field, value in person.items() %}
+              <td>
+                {% if (value, list) %}
+                {{value}}{{list}}
+                {% else %}
+                {{ value }}
+                {% endif %}
+              </td>
+              {% endfor %}
+            </tr>
+         
+          </tbody>
+              
+        {% endfor %}  {# Add this line to close the inner for loop #}
+        </table>
+      </div>
+    </section>
+    <a href="/"><h3>Back Home</h3></a>
+    
+    
+
+  
+  
+  </body>
+
+
+
+
+</html>
