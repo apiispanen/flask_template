@@ -19,7 +19,15 @@ import base64
 
 
 # Instantiates a client
-client = texttospeech.TextToSpeechClient.from_service_account_file('google.json')
+import os
+GOOGLE_JSON = os.getenv('GOOGLE_JSON')
+
+if GOOGLE_JSON is not None:
+    print('The Google Creds are found')
+    client = texttospeech.TextToSpeechClient.from_service_account_info(GOOGLE_JSON)
+else:
+    client = texttospeech.TextToSpeechClient.from_service_account_file('google.json')
+    print('The Google KEY environment variable is not set.')
 
 def tts(text):
     # Set the text input to be synthesized

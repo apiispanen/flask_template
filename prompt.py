@@ -3,7 +3,7 @@ import os
 API_KEY = os.getenv('API_KEY')
 
 if API_KEY is not None:
-    print(f'The API key is {API_KEY}')
+    print('The API key is found')
 else:
     from creds import API_KEY
     print('The API_KEY environment variable is not set.')

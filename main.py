@@ -3,7 +3,7 @@ print("************************************ RUNNING MAIN FILE ******************
 # import pyaudio
 import wave
 import os
-from stt import speech_to_text
+# from stt import speech_to_text
 from prompt import *
 from tts import tts, tts_string
 # import subprocess
