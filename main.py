@@ -5,15 +5,13 @@ import wave
 import os
 from stt import speech_to_text
 from prompt import *
-from tts import tts
+# from tts import tts
 # import subprocess
 # import sys
 # import pydub
 from flask import Flask, request, render_template, jsonify
 # from sound import *
 from flask import session
-
-
 
 print('enter getJSONReuslt', flush=True)
 
@@ -40,8 +38,6 @@ def index():
 #     return 'Off'
 
 
-
-
 @app.route("/save_audio", methods=['POST'])
 def save_audio():
 
@@ -56,15 +52,15 @@ def save_audio():
     prompt = ' '.join([word['value'] for word in words if word])
     print("YOUR PROMPT:", prompt)
     response = ai_response(prompt, networking=True)
-    tts(response)
+    print(response)
+    # tts(response)
     # do something with the audio data here
     
     # print(f"Received {len(prompt)} words of audio data")
 
-
-
-
     return "Success"
+
+
 
     # filename = 'temp/post_output.mp3'
     # with open(filename, "wb") as f:
