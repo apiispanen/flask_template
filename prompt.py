@@ -1,5 +1,13 @@
 import requests
-from creds import API_KEY
+import os
+api_key = os.getenv('API_KEY')
+
+if api_key is not None:
+    print(f'The API key is {api_key}')
+else:
+    from creds import API_KEY
+    print('The API_KEY environment variable is not set.')
+
 import subprocess
 import sys
 import string

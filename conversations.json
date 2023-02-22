@@ -20,7 +20,7 @@
             "School": "Penn State School of Medicine",
             "College": "American University",
             "Location": "Hershey, PA",
-            "Interests": "kisses",
+            "Interests": "painting and pottery",
             "Fun Facts": "She's the nicest person anyone has ever met.",
             "Previous Conversations": {}
         },
@@ -36,6 +36,12 @@
             "Interests": "Unknown",
             "Fun Facts": "Unknown",
             "[OTHER RELEVANT FIELD NAME]": ""
+        },
+        "Rachel Jenks": {
+            "School": "Oklahoma University",
+            "Location": "Plano, Texas",
+            "Interests": "Shopping",
+            "Fun Facts": "She is currently dating Brett Clark"
         }
     }
 }

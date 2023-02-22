@@ -76,7 +76,7 @@ def json_update(name, json_response, filename="conversations.json"):
         for key in conversation_json['People'][name]:
             data['People'][closest_match[0]][key] = conversation_json['People'][name][key]
     else:
-        print("No match found for ", name, "Adding new entry with JSON response: ",conversation_json['People'][name])
+        print("No match found for ", name, "Adding new entry with JSON response: ",conversation_json['People'])
         data['People'][name] = conversation_json['People'][name]
         
 
