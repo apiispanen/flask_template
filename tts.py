@@ -17,17 +17,17 @@ from google.cloud import texttospeech_v1beta1 as texttospeech
 # import pygame
 import base64
 
-
+import json
 # Instantiates a client
 import os
-GOOGLE_JSON = os.getenv('GOOGLE_JSON')
-
-if GOOGLE_JSON is not None:
+try:
+    GOOGLE_JSON = json.loads(os.getenv('GOOGLE_JSON'))
     print('The Google Creds are found')
-    client = texttospeech.TextToSpeechClient.from_service_account_info(GOOGLE_JSON)
-else:
+    client = texttospeech.TextToSpeechClient.from_service_account_file(GOOGLE_JSON)
+    
+except:
     client = texttospeech.TextToSpeechClient.from_service_account_file('google.json')
-    print('The Google KEY environment variable is not set.')
+    print('The Google KEY environment variable is not set. Using google.json')
 
 def tts(text):
     # Set the text input to be synthesized
