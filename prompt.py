@@ -1,5 +1,12 @@
 import requests
 from creds import API_KEY
+import os
+API_KEY = os.environ.get('API_KEY')
+if API_KEY is None:
+    print("API key not found in environment variable")
+else:
+    print(f"API key: {API_KEY}")
+
 import subprocess
 import sys
 import string
