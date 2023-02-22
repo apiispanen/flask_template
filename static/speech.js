@@ -22,7 +22,7 @@ button.addEventListener("speechsegment", (e) => {
     })
     .then(response => {
       // Handle response from server
-      let url = '/temp/output.mp3';
+      let url = '../temp/output.mp3';
 
       // create an Audio object and set the source to the URL
       let audio = new Audio(url);
