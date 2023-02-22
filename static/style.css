@@ -36,7 +36,7 @@ label {
   margin: 0.75rem 0.75rem;
 }
 
-input, select {
+input, select , textarea{
   box-sizing: border-box;
   font-size: 1.5rem;
   border: 1px solid #ccc;
@@ -46,9 +46,14 @@ input, select {
   min-width: 20rem;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, textarea:focus {
   outline: none !important;
   box-shadow: 0 0 10px #fff;
+}
+
+#response textarea{
+  height:200px;
+
 }
 
 select {

@@ -1,7 +1,6 @@
 # Google's speech to text API
 
 import requests
-from creds import GOOGLE_API
 import subprocess
 import sys
 

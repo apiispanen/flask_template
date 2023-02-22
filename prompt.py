@@ -4,11 +4,6 @@ import subprocess
 import sys
 import string
 # import ssl
-# subprocess.check_call([sys.executable, '-m', 'pip', 'install', 
-# 'openai'])
-
-# subprocess.check_call([sys.executable, '-m', 'pip', 'install', 
-# 'ssl'])
 
 import openai
 import json
@@ -20,32 +15,41 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     model_engine = "text-davinci-002"
     
     if networking:
-        temperature = 0.1
-        first_word = prompt.split()[0].lower().translate(str.maketrans("", "", string.punctuation))
+        update_strings = ["update",'edit', 'modify']
+        reminder_strings = ["remind", 'who']
+
+
+        first_word = prompt.split()[0].lower().translate(str.maketrans("", "", string.punctuation)).splitlines()[0]
 
         print("first word: ",first_word)
 
-        inquire_prompt = "Based on the below prompt, who is the person of interest we are asking about? Respond with only the name.\n"+prompt
-        name = ai_response(inquire_prompt, networking=False).replace('\n','')
-        print("NAME: "+name)
-        name  = name.translate(str.maketrans("", "", string.punctuation))
+
+        if first_word in update_strings or first_word in reminder_strings:
+            temperature = 0.1
+
+            inquire_prompt = "Based on the below prompt, who is the person of interest we are asking about? Respond with only the name.\n"+prompt
+            name = ai_response(inquire_prompt, networking=False).replace('\n','')
+            print("NAME: "+name)
+            name  = name.translate(str.maketrans("", "", string.punctuation))
 
 
-        if first_word == "update":
-            print("*** UPDATING USER ***")
-            prompt = """ONLY answer in JSON for a database called 'people' that is in the following format, filling in the brackets with any relvant data? Omit the data that isn't found, and add new fields where possible: \n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]" }}}  \nDo this based on the following conversation: \n""" + prompt
+            if first_word in update_strings:
+                print("*** UPDATING USER ***")
+                prompt = """ONLY answer in JSON for a database called "People" that is in the following format, filling in the brackets with any relvant data? Omit the data that isn't found, and add new fields where possible: \n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]", etc. }}}  \nDo this based on the following conversation: \n\n The person's name is """+name+"\n DIALOG:" + prompt
+                print("UPDATE PROMPT: ",prompt)
 
 
+            if first_word in reminder_strings:
+                print("*** RETRIEVING USER ***")
+                # What can you tell me about 
+                user_response = json_pull(name)
+                print("USER RESPONSE",user_response)
+                cleaned_name = list(user_response.keys())[0]
+                user_json = user_response[cleaned_name]
+                their_results = google_it(cleaned_name)
+                print("GOOGLE RESULT: "+their_results)
 
-        if first_word == "remind":
-            print("*** RETRIEVING USER ***")
-            # What can you tell me about 
-            user_json = json_pull(name)
-            
-            their_results = google_it(name)
-            print("GOOGLE RESULT: "+their_results)
-
-            prompt = "Based on their Linkedin header: "+str(their_results)+"\n and their json data:\n"+str(user_json)+'\n Can you briefly summarize the person?'
+                prompt = "Based on their Linkedin header: "+str(their_results)+"\n and their json data:\n"+str(user_response)+'\n Can you briefly summarize the person?'
 
 
 

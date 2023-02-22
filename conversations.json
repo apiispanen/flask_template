@@ -13,10 +13,14 @@
             "Location": "New York City",
             "Interests": "Cars and Money",
             "Fun Facts": "Rothstein loves fun",
-            "Previous Conversations": {}
+            "Previous Conversations": {},
+            "Scene": "He is a good person but I think he listens to Super Tramp too much"
         },
         "Rani Zierath": {
-            "School": "American University",
+            "School": [
+                "American University",
+                "Penn State College of Medicine"
+            ],
             "Location": "Hershey, PA",
             "Interests": "Cardiology, hugs",
             "Fun Facts": "She's the nicest person anyone has ever met.",

@@ -1,17 +1,11 @@
 # Google's speech to text API
 
 import requests
-from creds import GOOGLE_API
 import subprocess
 import sys
 
-# subprocess.check_call([sys.executable, '-m', 'pip', 'install', 
-# 'google-cloud-speech'])
-
 from google.cloud import speech
 
-# from google.cloud import speech_v1
-# from google.cloud.speech_v1 import types
 
 def speech_to_text(filename = "temp/test_recording.mp3"):
     client = speech.SpeechClient.from_service_account_file('google.json')

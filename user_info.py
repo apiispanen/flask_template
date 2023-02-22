@@ -54,13 +54,13 @@ def json_pull(name, filename="conversations.json"):
     if closest_match:
         name = closest_match[0]
         print("We are assuming '", search_name, "' is", closest_match[0])
-        print(data["People"][name])
+        # print(data["People"][name])
         result = data["People"][name] 
     else:
         print("No match found for", search_name)
         result = "None given"
     
-    return result
+    return dict({name:result})
 
 # Based on an input including name & JSON of the conversation, update the appropriate fields in their JSON: 
 def json_update(name, json_response, filename="conversations.json"):
