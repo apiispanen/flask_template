@@ -1,6 +1,6 @@
 print("************************************ RUNNING MAIN FILE ************************************")
 
-import pyaudio
+# import pyaudio
 import wave
 import os
 from stt import speech_to_text
@@ -10,7 +10,7 @@ from tts import tts
 # import sys
 # import pydub
 from flask import Flask, request, render_template, jsonify
-from sound import *
+# from sound import *
 from flask import session
 
 
@@ -24,24 +24,21 @@ app.config["CACHE_TYPE"] = "null"
 def index():
     return render_template('voice.html')
 
-@app.route('/startRecording')
-def startRecording(guiAUD=guiAUD):
-    guiAUD.startRecording()
-    return "On"
+# @app.route('/startRecording')
+# def startRecording(guiAUD=guiAUD):
+#     guiAUD.startRecording()
+#     return "On"
 
-@app.route('/stopRecording')
-def stopRecording(guiAUD=guiAUD):
-    guiAUD.stopRecording()
-    text_result = speech_to_text()
-    transcript = text_result.transcript
-    confidence = text_result.confidence 
-    response = ai_response(transcript)
-    tts(response)
-    return 'Off'
+# @app.route('/stopRecording')
+# def stopRecording(guiAUD=guiAUD):
+#     guiAUD.stopRecording()
+#     text_result = speech_to_text()
+#     transcript = text_result.transcript
+#     confidence = text_result.confidence 
+#     response = ai_response(transcript)
+#     tts(response)
+#     return 'Off'
 
-# @app.route("/run_audio", methods=['POST'])
-# def run_audio():
-#     print("************************running AUDIO ****")
 
 
 
@@ -79,18 +76,6 @@ def save_audio():
     # else:
     #     print(f"{filename} either does not exist or is not writable")
 
-    
-    # original function END
-    # pydub.AudioSegment.export(filename, format="mp3")
-
-    # stt_object = speech_to_text(filename=filename)
-    # transcript, confidence = stt_object.transcript, stt_object.confidence
-    # print(transcript, confidence)
-    # print("Thinking...")
-    # return "Audio saved."
-
-    # return transcript
-
 
     # response = ai_response(transcript)
     # # response = ai_response(transcript, previous_conversation=load_conversation())
@@ -111,7 +96,5 @@ if __name__ == "__main__":
     app.secret_key = 'mysecretkey'
     # app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(debug=True, port=int(os.getenv("PORT", default=5000)))
-
-
 
 # ai_response("What are 5 words to describe a grouchy fucking pig?")
