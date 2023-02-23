@@ -28,6 +28,7 @@ Autorization Scripts (not added to GH):
 - creds.py - holds API Keys in a Python format
 - google.json - holds google authorization payload
 
+![Networker Demo](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*1vw8y19iIVxi4UXhwbKLhA.png)
 
 Setbacks
 - Logic loops
@@ -37,6 +38,8 @@ Setbacks
 Needs: 
 - Better human recognition
 - Memory virtually - via MongoDB
+<br><br>
+For more information, see our [Medium Post](https://medium.com/@andrewpiispanen/the-networker-project-cc8765c25f50).
 <br><br>
 Questions? Reach out to me:<br>
 apiispanen@berkeley.edu<br>
