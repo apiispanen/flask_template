@@ -52,7 +52,6 @@ def people():
 def save_audio():
 
     # process the audio data here
-    print("Running save_audio() function")
     
     # mark the function as called
     session['audio_saved'] = True
@@ -61,16 +60,12 @@ def save_audio():
     prompt = request.json['words']
     # prompt = ' '.join([word['value'] for word in words if word])
     print("YOUR PROMPT:", prompt)
-    response = ai_response(prompt, networking=True)
-    # print(response)
+    response = ai_response(prompt, networking=True).replace('\n','')
 
-    
     audioContent = tts_string(response)
     # do something with the audio data here
 
-    return jsonify({"audioContent": audioContent})
-
-
+    return jsonify({"audioContent": audioContent, "airesponse":response})
 
 
     # filename = 'temp/post_output.mp3'
@@ -95,16 +90,20 @@ def save_audio():
     # # self.add_response(transcript, response, confidence)
     # tts(response)
 
-
-
 # if __name__ == "__main__":
 app.secret_key = 'mysecretkey'
 # app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-# FOR RUNNING ON RAILWAY
-app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
-# FOR RUNNING ON LOCAL
-# app.run(debug=False, port=int(os.getenv("PORT", default=5000)))
+API_KEY = os.getenv('API_KEY')
+
+if API_KEY is not None:
+    # FOR RUNNING ON RAILWAY
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+else:
+    # FOR RUNNING ON LOCAL
+    app.run(debug=False, port=int(os.getenv("PORT", default=5000)))
+
+
 
 # ai_response("What are 5 words to describe a grouchy fucking pig?")

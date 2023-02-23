@@ -51,8 +51,7 @@ button.addEventListener("speechsegment", (e) => {
 
 
 // IF SOMEONE FILLS OUT THE PROMPT AND WANTS TO RESEND:
-  const responseTextArea = document.querySelector("#response textarea");
-
+const responseTextArea = document.querySelector("#response textarea");
 // add an event listener for when the user submits the form
 responseTextArea.addEventListener("keydown", function(event) {
   // check if the user pressed the "Enter" key
@@ -61,7 +60,8 @@ responseTextArea.addEventListener("keydown", function(event) {
     const responseText = responseTextArea.value;
     console.log(responseText);
     // call your desired function here
-    save_audio(responseText);
+    var airesponse = save_audio(responseText);
+
   }
 });
 
@@ -82,6 +82,12 @@ function save_audio(words) {
     const audioContent = data.audioContent;
     const audioSrc = `data:audio/mpeg;base64,${audioContent}`;
     const audio = new Audio(audioSrc);
+    const airesponse = data.airesponse;
+    console.log(airesponse);
+    const airesponseTextArea = document.querySelector("#airesponse textarea");
+    airesponseTextArea.value = airesponse;
+
+
     audio.play();
   })
   .catch(error => {
@@ -90,17 +96,15 @@ function save_audio(words) {
   
   
   
-  
-  ;
     
   console.log("Your function has been performed!");
 }
 
 
-$(window).on("load resize ", function() {
+window.onload.resize=function() {
   var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
   $('.tbl-header').css({'padding-right':scrollWidth});
-}).resize();
+};
 
 
 

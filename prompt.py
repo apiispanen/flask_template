@@ -29,7 +29,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 
         first_word = prompt.split()[0].lower().translate(str.maketrans("", "", string.punctuation)).splitlines()[0]
 
-        print("first word: ",first_word)
+        # print("first word: ",first_word)
 
 
         if first_word in update_strings or first_word in reminder_strings:
