@@ -102,9 +102,9 @@ app.secret_key = 'mysecretkey'
 # app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # FOR RUNNING ON RAILWAY
-app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+# app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
 # FOR RUNNING ON LOCAL
-# app.run(debug=False, port=int(os.getenv("PORT", default=5000)))
+app.run(debug=False, port=int(os.getenv("PORT", default=5000)))
 
 # ai_response("What are 5 words to describe a grouchy fucking pig?")

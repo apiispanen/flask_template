@@ -23,8 +23,7 @@ import os
 try:
     GOOGLE_JSON = json.loads(os.getenv('GOOGLE_JSON'))
     print('The Google Creds are found')
-    client = texttospeech.TextToSpeechClient.from_service_account_json(GOOGLE_JSON)
-    
+    client = texttospeech.TextToSpeechClient.from_service_account_info(GOOGLE_JSON)
 except:
     client = texttospeech.TextToSpeechClient.from_service_account_file('google.json')
     print('The Google KEY environment variable is not set. Using google.json')

@@ -33,7 +33,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 
 
         if first_word in update_strings or first_word in reminder_strings:
-            temperature = 0.1
+            temperature = 0
 
             inquire_prompt = "Based on the below prompt, who is the person of interest we are asking about? Respond with only the name.\n"+prompt
             name = ai_response(inquire_prompt, networking=False).replace('\n','')
@@ -43,7 +43,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 
             if first_word in update_strings:
                 print("*** UPDATING USER ***")
-                prompt = """OBJECTIVE: JSON response for a database called "People" that is in the following format:\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this, can you fill in the brackets with any data THAT YOU ARE CERTAIN ABOUT? Omit fields that can't be found, and add new fields where possible.\n\n The person's name is """+name+"\n All of this will be created based on the following DIALOG:" + prompt
+                prompt = """OBJECTIVE: JSON response for a database called "People" that is in the following format:\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this, can you fill in the brackets with any data THAT IS CERTAIN? Omit all fields that can't be found, and add new fields where possible.\n\n The person's name is """+name+"\n All of this will be created based on the following DIALOG:" + prompt
                 # print("UPDATE PROMPT: ",prompt)
 
 
