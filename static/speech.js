@@ -3,6 +3,29 @@ window.onload=function(){
  
 var button = document.getElementsByTagName("push-to-talk-button")[0];
 
+
+// SPACE BAR SUBSTITUTE FOR BUTTON PUSH
+document.addEventListener("keydown", (event) => {
+  // Check if the currently focused element is a textarea element
+  const focusedElement = document.activeElement;
+  const isTextarea = focusedElement.tagName === "TEXTAREA";
+  
+  if (event.key === ' ' && !isTextarea) {
+    event.preventDefault();
+    button.click();
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.key === ' ') {
+    button.release();
+  }
+});
+
+// END SPACE BAR SUBSTITUTE FOR BUTTON PUSH
+
+
+// NOW SPEECH SPEECH SPEEEEECCCHHH
 button.addEventListener("speechsegment", (e) => {
   
   const speechSegment = e.detail;
