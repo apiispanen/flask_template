@@ -1,8 +1,8 @@
 # Networker
-Tests with Open AI to improve networking
+Get Past Small Talk - Your AI-Powered Networking Assistant
 
 ## Basic Summary
-OpenAI has impressed the world with ChatGPT. It is the combination of openai's text prompting algorithm, combined with Google's Speech to Text.
+OpenAI has impressed the world with ChatGPT. Networker is an AI-powered tool that aims to help you overcome the barrier of small talk when networking. By helping you remember important details about people, it aims to facilitate more meaningful conversations and build deeper connections. It is the combination of OpenAI's text prompting algorithm da-vinci, combined with both Speechly and Google APIs. 
 
 ## Project Outcome
 Once the Speech to text funcitonality is flushed out, we'll want to have the following features:
