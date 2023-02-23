@@ -1,9 +1,15 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+MONGO_CLIENT = os.getenv('MONGO_CLIENT')
 
+if MONGO_CLIENT is not None:
+    # RUNNING ON RAILWAY
+    MONGO_CLIENT = os.getenv('MONGO_CLIENT')
+else:
+    from creds import MONGO_CLIENT     
 # Connect to the MongoDB instance
-client = MongoClient("mongodb://mongo:Blp3BrAbO656LVNgk2B1@containers-us-west-166.railway.app:6395")
+client = MongoClient(MONGO_CLIENT)
 
 # Get a list of all the collections in the database
 db = client.test
