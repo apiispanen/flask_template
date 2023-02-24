@@ -87,6 +87,11 @@ responseTextArea.addEventListener("keydown", function(event) {
 
   }
 });
+function return_prompt(audio, response) {
+
+
+};
+
 
 // define the function that you want to perform
 function save_audio(words) {
