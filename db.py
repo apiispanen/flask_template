@@ -28,12 +28,12 @@ def update_person(name, json_input, badname, client=client):
     collection = db['people']
     name = str(name)
     for key in json_input:
-        collection.update_one({"People."+name: {"$exists": True}}, {"$set": {"People."+name+"."+str(key): str(json_input[key])}})
+        collection.update_one({"People": {"$exists": True}}, {"$set": {"People."+name+"."+str(key): str(json_input[key])}})
         print(key +" : "+ json_input[key])
-    
-
-
+    # If doing user-specific DBs, do:
+    # collection.insert({"People": {"$exists": True}}, {"$set": {"People."+name+"."+str(key): str(json_input[key])}}) 
     return name+" Updated"
+
 
 # conversation_json = """{   "People":{
 #             "John Doe": {
@@ -45,5 +45,3 @@ def update_person(name, json_input, badname, client=client):
 
 # print(update_person("Sam Casey", conversation_json))
 
-# document = {"key": "value"}
-# collection.insert_one(document)

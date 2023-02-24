@@ -2,7 +2,7 @@ import requests
 import os
 API_KEY = os.getenv('API_KEY')
 
-if API_KEY is not None:
+if API_KEY is not None: 
     print('The API key is found')
 else:
     from creds import API_KEY
@@ -25,27 +25,21 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     if networking:
         update_strings = ["update",'edit', 'modify']
         reminder_strings = ["remind", 'who']
-
-
         first_word = prompt.split()[0].lower().translate(str.maketrans("", "", string.punctuation)).splitlines()[0]
 
         # print("first word: ",first_word)
 
-
         if first_word in update_strings or first_word in reminder_strings:
             temperature = 0
-
-            inquire_prompt = "Based on the below prompt, who is the person of interest we are asking about? Respond with ONLY the person's name:\n"+prompt
+            inquire_prompt = "Based on the below prompt, who is the person of interest we are inquiring about? Respond with ONLY the person's name:\n"+prompt
             name = ai_response(inquire_prompt, networking=False).replace('\n','')
             print("NAME: "+name)
             name  = name.translate(str.maketrans("", "", string.punctuation))
 
-
             if first_word in update_strings:
                 print("*** UPDATING USER ***")
-                prompt = """OBJECTIVE: JSON response for a database called "People" that is in the following format:\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this, can you fill in the brackets with any data THAT IS CERTAIN? Omit all fields that can't be found, and add new fields where possible.\n\n The person's name is """+name+"\n All of this will be created based on the following DIALOG:" + prompt
+                prompt = """Pretend you are building a JSON database called "People" that is in the following rough format (comments in "[]"):\n\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this design, what fields and keys would you make out of the following dialog:""" + prompt+"\n\nAnswer in JSON only, and with what data you are certain about."
                 # print("UPDATE PROMPT: ",prompt)
-
 
             if first_word in reminder_strings:
                 print("*** RETRIEVING USER ***")
@@ -68,7 +62,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
                 # print("GOOGLE RESULT: "+their_results)
                 # prompt = "Based on their Linkedin header: "+str(their_results)+"\n and their json data:\n"+str(user_response)+'\n Can you briefly summarize the person?'
 
-                prompt = "Based on their json data, can you briefly summarize the person below?\n"+str(user_response)+'\n '
+                prompt = "Pretend you're an assistant for me. Based on their json file data below, can you briefly summarize this person?\n"+str(user_response)+'\n '
 
 
 
@@ -104,40 +98,6 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     return message
 
 
-def save_conversation(prompt, response=None):
-    
-    filename = 'temp/conversation.json'
-
-    with open(filename) as fp:
-        listObj = json.load(fp)
-        
-    # Verify existing list
-    # print(listObj)
-
-    # request_num = str(len(listObj) /2)
-    listObj["prompt "+str(len(listObj))] = prompt
-    # listObj["response "+request_num] = response
-    
-    # Verify updated list
-    # print(listObj)
-
-    with open(filename, 'w') as json_file:
-        json.dump(listObj, json_file, 
-                            indent=4,  
-                            separators=(',',': '), ensure_ascii=True)
-
-def load_conversation():
-    try:
-        with open("temp/conversation.json", "r") as f:
-            all_prompts = json.load(f)
-            # print(all_prompts)
-            return all_prompts
-    except:
-        return {}
-
-
-
-# prompt="What is my name?"
 
 # """I'm writing a script that will log relevant information about a person. Can you highlight the conversation below with the following format?
 # - Person 

@@ -10,6 +10,7 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	min-height: 100vh;
   --dropdown-handle-size: 0.35rem;  
+
 }
 
 main {
@@ -88,8 +89,21 @@ select {
   position: relative;
 }
 
+.tiny{
+  font-size: 8px;
+}
 
 /* ************* PEOPLE PAGE ONLY ************* */
+#people:not(.bottom){
+  margin-left:15%;
+  margin-right:15%;
+  padding-top:5%;
+  padding-bottom: 5%;
+}
+#people li{
+  padding:10px;
+
+}
 
 #people h1, h3{
   font-size: 30px;

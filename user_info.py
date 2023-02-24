@@ -77,9 +77,8 @@ def json_update(lookupname, json_input, filename=None):
     if closest_match:
         print("We are assuming '", lookupname, "' is", closest_match[0])
         name = closest_match[0]
-
-    #     for key in conversation_json['People'][name]:
-    #         data['People'][closest_match[0]][key] = conversation_json['People'][name][key]
+        #     for key in conversation_json['People'][name]:
+        #         data['People'][closest_match[0]][key] = conversation_json['People'][name][key]
     else:
         print("No match found for ", name, "Adding new entry with JSON response: ",json_input)
         # data['People'][name] = conversation_json['People'][name]
