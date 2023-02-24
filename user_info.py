@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-
+from db import get_people, update_person
 import difflib
 
 def google_it(search_term, other_info=None):
@@ -43,10 +43,13 @@ def get_json(input_string):
     return data
 
 # Based on an input of a name, return the json of this person's info:
-def json_pull(name, filename="conversations.json"):
+def json_pull(name, filename=None):
     # Load the existing data from the file
-    with open(filename, "r") as f:
-        data = json.load(f)
+    if not filename:
+        data = get_people()
+    else:
+        with open(filename, "r") as f:
+            data = json.load(f)
 
     name_list = list(data["People"].keys())
     search_name = name
@@ -64,39 +67,67 @@ def json_pull(name, filename="conversations.json"):
     return dict({name:result})
 
 # Based on an input including name & JSON of the conversation, update the appropriate fields in their JSON: 
-def json_update(name, json_response, filename="conversations.json"):
-    with open(filename, "r") as f:
-        data = json.load(f)
-    conversation_json = get_json(json_response)
+def json_update(lookupname, json_input, filename=None):
+    if not filename:
+        data = get_people()
+    json_input = get_json(json_input)
+    name = lookupname
     name_list = list(data["People"].keys())
-    closest_match = difflib.get_close_matches(name, name_list, n=1, cutoff=.6)
+    closest_match = difflib.get_close_matches(lookupname, name_list, n=1, cutoff=.6)
     if closest_match:
-        print("We are assuming '", name, "' is", closest_match[0])
-        # print(data["People"][name])
-        for key in conversation_json['People'][name]:
-            data['People'][closest_match[0]][key] = conversation_json['People'][name][key]
+        print("We are assuming '", lookupname, "' is", closest_match[0])
+        name = closest_match[0]
+
+    #     for key in conversation_json['People'][name]:
+    #         data['People'][closest_match[0]][key] = conversation_json['People'][name][key]
     else:
-        print("No match found for ", name, "Adding new entry with JSON response: ",conversation_json['People'])
-        data['People'][name] = conversation_json['People'][name]
+        print("No match found for ", name, "Adding new entry with JSON response: ",json_input)
+        # data['People'][name] = conversation_json['People'][name]
         
-
     # Write the updated data back to the file
-    with open("conversations.json", "w") as f:
-        json.dump(data, f, indent=4)
+    if filename:
+        with open("conversations.json", "w") as f:
+            json.dump(data, f, indent=4)
+
+    # for data in conversation_json['People'][name]:
+        # print(data)
+        # pass
+
+    return update_person(name, json_input['People'][name], badname=lookupname)
 
 
-conversation_json = """{   "People":{
-            "John Doe": {
-            "School": "Bunker Hill",
-            "Location": "Boston, MA",
-            "Interests":"Painting",
-            "Fun Facts":"Skiied in the alps" }}}"""
+# conversation_json = """{   "People":{
+#             "John Hoe": {
+#             "School": "Bunker Hill",
+#             "Location": "Lexington, MA",
+#             "Fondest Memory":"Swimming the English Channel",
+#             "Fun Facts":"Knows a thing or two about being incognito" }}}"""
 
-# json_update("John Doe", conversation_json)
-
-
-
+# json_update("John Hoe", conversation_json)
     
+def clean_sentence(sentence):
+    import requests
+
+    endpoint = "https://grammarbot.p.rapidapi.com/check"
+    headers = {
+        "X-RapidAPI-Key": "your_api_key",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    params = {
+        "language": "en-US",
+        "text": sentence
+    }
+    response = requests.post(endpoint, headers=headers, data=params)
+    print(response)
+    if response.ok:
+        result = response.json()
+        corrected_sentence = result["matches"][0]["replacements"][0]["value"]
+        print(corrected_sentence)
+        return corrected_sentence
+    else:
+        return sentence
+    
+# print(clean_sentence('Update Sam casey his favorite food are turkey'))
 
 
 

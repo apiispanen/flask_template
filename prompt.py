@@ -35,7 +35,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
         if first_word in update_strings or first_word in reminder_strings:
             temperature = 0
 
-            inquire_prompt = "Based on the below prompt, who is the person of interest we are asking about? Respond with only the name.\n"+prompt
+            inquire_prompt = "Based on the below prompt, who is the person of interest we are asking about? Respond with ONLY the person's name:\n"+prompt
             name = ai_response(inquire_prompt, networking=False).replace('\n','')
             print("NAME: "+name)
             name  = name.translate(str.maketrans("", "", string.punctuation))
@@ -64,10 +64,11 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
                     print("relevant info: ", relevant_info)
                 else:
                     relevant_info = None
-                their_results = google_it(cleaned_name, other_info=relevant_info)
-                print("GOOGLE RESULT: "+their_results)
+                # their_results = google_it(cleaned_name, other_info=relevant_info)
+                # print("GOOGLE RESULT: "+their_results)
+                # prompt = "Based on their Linkedin header: "+str(their_results)+"\n and their json data:\n"+str(user_response)+'\n Can you briefly summarize the person?'
 
-                prompt = "Based on their Linkedin header: "+str(their_results)+"\n and their json data:\n"+str(user_response)+'\n Can you briefly summarize the person?'
+                prompt = "Based on their json data, can you briefly summarize the person below?\n"+str(user_response)+'\n '
 
 
 
@@ -95,6 +96,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     if networking and first_word in update_strings:
         print("to feed into json_update:\n",name, message)
         json_update(name, message)
+        message = name+" has been updated."
         print("******** JSON UPDATED ********")
 
 

@@ -3,7 +3,7 @@ window.onload=function(){
  
 var button = document.getElementsByTagName("push-to-talk-button")[0];
 
-
+if (button){
 // SPACE BAR SUBSTITUTE FOR BUTTON PUSH
 document.addEventListener("keydown", (event) => {
   // Check if the currently focused element is a textarea element
@@ -122,7 +122,7 @@ function save_audio(words) {
     
   console.log("Your function has been performed!");
 }
-
+};
 
 window.onload.resize=function() {
   var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
@@ -130,6 +130,15 @@ window.onload.resize=function() {
 };
 
 
+var hoverlog = document.getElementById("hoverlog");
+var log = document.getElementById("log");
+
+hoverlog.onclick=function(){
+  $("#log").slideToggle( "slow", function() {
+    // Animation complete.
+  });
+
+}
 
 
 

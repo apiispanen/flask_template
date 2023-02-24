@@ -12,6 +12,7 @@ from tts import tts, tts_string
 from flask import Flask, request, render_template, jsonify
 # from sound import *
 from flask import session
+from db import get_people
 audioContent = ''
 
 print('enter getJSONReuslt', flush=True)
@@ -24,13 +25,14 @@ def index():
     return render_template('voice.html')
 
 
-@app.route('/people')
-def people():
-    with open("conversations.json", "r") as f:
-        data = json.load(f)
+@app.route('/about')
+def about():
+    # with open("conversations.json", "r") as f:
+    #     data = json.load(f)
+    data = get_people()
     it = iter(data['People']).__next__
 
-    return render_template('people.html', data=data, it=it)
+    return render_template('about.html', data=data, it=it)
 
 # @app.route('/startRecording')
 # def startRecording(guiAUD=guiAUD):

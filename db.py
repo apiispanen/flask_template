@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-
+import os
 MONGO_CLIENT = os.getenv('MONGO_CLIENT')
 
 if MONGO_CLIENT is not None:
@@ -11,24 +11,39 @@ else:
 # Connect to the MongoDB instance
 client = MongoClient(MONGO_CLIENT)
 
-# Get a list of all the collections in the database
-db = client.test
-collections = db.list_collection_names()
-print(collections)
-# Iterate over each collection
-for collection_name in collections:
-    collection = db[collection_name]
-    document = collection.find_one({"_id": ObjectId("63f783cb16dd59001cb54c12")})
-    print(document)
-    # for key in document:
-    #     value = document[key]
-    #     print(key, value)
-    # Iterate over each document in the collection and print it
-    # for document in collection.find():
-        
+
+def get_people(client=client):
+    # Pick out the DB we'd like to use.
+    db = client.db
+    # GET THE PEOPLE COLLECTION (NOT The Document)
+    collection = db['people']
+    people = collection.find_one({"_id": ObjectId("63f7cebae3ed60001c2e72ef")})
+    
+    # Returns the JSON string of people, as detailed in our example
+    # print(people['People'])
+    return people
+
+def update_person(name, json_input, badname, client=client):
+    db =client.db
+    collection = db['people']
+    name = str(name)
+    for key in json_input:
+        collection.update_one({"People."+name: {"$exists": True}}, {"$set": {"People."+name+"."+str(key): str(json_input[key])}})
+        print(key +" : "+ json_input[key])
+    
 
 
+    return name+" Updated"
 
+# conversation_json = """{   "People":{
+#             "John Doe": {
+#             "School": "Bunker Hill",
+#             "Location": "Boston, MA",
+#             "Interests":"Painting",
+#             "Fun Facts":"Skiied in the alps" }}}"""
+
+
+# print(update_person("Sam Casey", conversation_json))
 
 # document = {"key": "value"}
 # collection.insert_one(document)

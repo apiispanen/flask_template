@@ -15,7 +15,8 @@
       <link rel="stylesheet" href="../static/style.css">
   
       <script src="{{url_for('static', filename='speech.js')}}"></script>
-  
+      <script
+  src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://speechly.github.io/browser-ui/v2/speechly-ui.css">
       <!-- <script src="{{url_for('static', filename='style.css')}}"></script> -->
   
@@ -36,13 +37,13 @@
         </li><li>
         <b>Inquiry Assistant:</b> Networker will gather information on you by asking rich, meaningful questions to get to know you, your connections, and help you to inquire more about life, acting as both an assistant and personal coach.
         </li></ul> 
-        Github link is <a href="">found here.</a>
         </p></section>
-
- 
     <section>
       <!--for demo wrap-->
-      <h3>Logged People</h3>
+
+      <h4 id="hoverlog">View People Data</h4>
+      <div id="log" style="display:none">
+      <p>Historically Logged People</p>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
           <thead>
@@ -78,8 +79,14 @@
         {% endfor %}  {# Add this line to close the inner for loop #}
         </table>
       </div>
+    </div>
+    <p class="find-us">
+      Learn More:<br><a href="https://github.com/apiispanen/networker" target="_blank">Github</a> | 
+      <a href="https://medium.com/@andrewpiispanen/the-networker-project-cc8765c25f50" target="_blank">Medium</a> | <a href="mailto:apiispanen@berkeley.edu">Email</a>
+      </p>
+
     </section>
-    <a href="/"><h3>Back Home</h3></a>
+    <a href="/"><h4>-- Go Back --</h4></a>
     
     
 

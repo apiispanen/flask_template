@@ -1,11 +1,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <title>Networker (Alpha)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script type="text/javascript" src="https://speechly.github.io/browser-ui/v2/push-to-talk-button.js"></script>
     <script type="text/javascript" src="https://speechly.github.io/browser-ui/v2/big-transcript.js"></script>
     <!-- <script type="text/javascript" src="../style/speech.js"></script> -->
     <link rel="stylesheet" href="../static/style.css">
+    <script src="https://unpkg.com/@grammarly/editor-sdk?clientId=client_LPkx8nDFo6k1yYnvLRcj5m"></script>
 
     <script src="{{url_for('static', filename='speech.js')}}"></script>
 
@@ -32,7 +34,7 @@
     <main>
       <section>
         <div class="group">
-          <label>Inquiry</label>
+          <label>Inquiry (Non Functional)</label>
           <div class="inputContainer">
             <select id="brand">
               <option>General</option>
@@ -49,17 +51,18 @@
         <div class="group">
           <label>Prompt</label>
           <div class="inputContainer" id="response">
-           <textarea type="text"></textarea>
+            <grammarly-editor-plugin>
+              <textarea type="text" placeholder="Use speech or insert prompt here - press enter when done"></textarea>
+            </grammarly-editor-plugin>
           </div>
   
         </div>
         <div class="group">
           <label>Response</label>
           <div class="inputContainer" id="airesponse">
-             <textarea type="text"></textarea>
+             <textarea type="text" disabled></textarea>
             </div>
-
-            <a href="/people"><h4>Known Entities</h4></a>
+            <a href="/about"><h4>About</h4></a>
         
 
       </section>

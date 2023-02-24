@@ -141,9 +141,23 @@ td{
   border-bottom: solid 1px rgba(255,255,255,0.1);
   word-wrap: break-word;
 }
-a:link, a:visited, a:hover, a:active, a{
+a:link, a:visited, a:active, a{
   text-decoration: none;
+  color:#fff;
 }
+a:hover, .hoverlog{
+  text-decoration: none;
+  color:#b4a3a3;
+}
+.find-us{
+ text-align: center; 
+ padding:30px
+}
+.find-us a{
+padding: 20px;
+line-height: 200%;
+}
+
 
 /* demo styles */
 
