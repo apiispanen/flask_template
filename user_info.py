@@ -73,37 +73,27 @@ def json_update(lookupname, json_input, filename=None):
     json_input = get_json(json_input)
     name = lookupname
     name_list = list(data["People"].keys())
-    closest_match = difflib.get_close_matches(lookupname, name_list, n=1, cutoff=.6)
-    if closest_match:
-        print("We are assuming '", lookupname, "' is", closest_match[0])
-        name = closest_match[0]
-        #     for key in conversation_json['People'][name]:
-        #         data['People'][closest_match[0]][key] = conversation_json['People'][name][key]
-    else:
+    
+    # LOOK UP ANY FIRST NAMES THAT MATCH
+    try:
+        first_name_match = difflib.get_close_matches(lookupname.split(' ')[0],[name.split(' ')[0] for name in name_list], n=1, cutoff=.7)[0]
+        # NOW, LOOK AT ANY LAST NAMES THAT MATCH
+        last_name_match = difflib.get_close_matches(lookupname.split(' ')[1], [name.split(' ')[1] for name in name_list], n=1, cutoff=.7)[0]
+        # COMBINE
+        closest_match = first_name_match + ' ' + last_name_match
+        print("We are assuming '", lookupname, "' is", closest_match)
+        name = closest_match
+
+    except:
         print("No match found for ", name, "Adding new entry with JSON response: ",json_input)
-        # data['People'][name] = conversation_json['People'][name]
         
     # Write the updated data back to the file
     if filename:
         with open("conversations.json", "w") as f:
             json.dump(data, f, indent=4)
 
-    # for data in conversation_json['People'][name]:
-        # print(data)
-        # pass
-
     return update_person(name, json_input['People'][name], badname=lookupname)
 
-
-# conversation_json = """{   "People":{
-#             "John Hoe": {
-#             "School": "Bunker Hill",
-#             "Location": "Lexington, MA",
-#             "Fondest Memory":"Swimming the English Channel",
-#             "Fun Facts":"Knows a thing or two about being incognito" }}}"""
-
-# json_update("John Hoe", conversation_json)
-    
 def clean_sentence(sentence):
     import requests
 
@@ -128,20 +118,14 @@ def clean_sentence(sentence):
     
 # print(clean_sentence('Update Sam casey his favorite food are turkey'))
 
+# conversation_json = """{   "People":{
+#             "John Hoe": {
+#             "School": "Bunker Hill",
+#             "Location": "Lexington, MA",
+#             "Fondest Memory":"Swimming the English Channel",
+#             "Fun Facts":"Knows a thing or two about being incognito" }}}"""
 
-
-# json_pull("Sam Casey")
-
-# conversation = """
-# {   "People":
-#             "[PERSONS NAME]": {
-#             "School": "",
-#             "Location": "",
-#             "Interests":"",
-#             "Fun Facts":"",
-#             "Previous Conversations":{} }}
-
-
+# json_update("John Hoe", conversation_json)
 
 #  Sam Casey:
 

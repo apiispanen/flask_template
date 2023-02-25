@@ -31,14 +31,14 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 
         if first_word in update_strings or first_word in reminder_strings:
             temperature = 0
-            inquire_prompt = "Based on the below prompt, who is the person of interest we are inquiring about? Respond with ONLY the person's name:\n"+prompt
+            inquire_prompt = "Based on the below prompt, who is the person of interest we are inquiring about?\n\n'"+prompt+"' Please answer in as few words as possible."
             name = ai_response(inquire_prompt, networking=False).replace('\n','')
             print("NAME: "+name)
             name  = name.translate(str.maketrans("", "", string.punctuation))
 
             if first_word in update_strings:
                 print("*** UPDATING USER ***")
-                prompt = """Pretend you are building a JSON database called "People" that is in the following rough format (comments in "[]"):\n\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this design, what fields and keys would you make out of the following dialog:""" + prompt+"\n\nAnswer in JSON only, and with what data you are certain about."
+                prompt = """Pretend you are building a JSON database called "People" that is in the following rough format (comments in "[]"):\n\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this design, what fields and keys would you make out of the following dialog:""" + prompt+"\n\nAnswer in JSON only, and with facts you are certain about."
                 # print("UPDATE PROMPT: ",prompt)
 
             if first_word in reminder_strings:
