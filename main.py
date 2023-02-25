@@ -67,6 +67,4 @@ else:
     print("Running on Railway")
     app.run(debug=False, port=int(os.getenv("PORT", default=5000)))
 
-
-
 # ai_response("What are 5 words to describe a grouchy fucking pig?")

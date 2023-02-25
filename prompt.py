@@ -31,7 +31,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 
         if first_word in update_strings or first_word in reminder_strings:
             temperature = 0
-            inquire_prompt = "Based on the below prompt, who is the person of interest we are inquiring about?\n\n'"+prompt+"' Please answer in as few words as possible."
+            inquire_prompt = "Based on the below prompt, what is this person's name?\n\n'"+prompt+"'"
             name = ai_response(inquire_prompt, networking=False).replace('\n','')
             print("NAME: "+name)
             name  = name.translate(str.maketrans("", "", string.punctuation))
@@ -97,6 +97,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 
     return message
 
+# prompt = 'update robert piispanen - he works at carlson fabrication solution, is a business owner and has a dog named stella. On the weekends, he likes to go swimming at the lake.'
 
 
 # """I'm writing a script that will log relevant information about a person. Can you highlight the conversation below with the following format?
