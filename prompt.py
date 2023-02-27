@@ -28,10 +28,11 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
         ask_strings = ["what"]
         first_word = prompt.split()[0].lower().translate(str.maketrans("", "", string.punctuation)).splitlines()[0]
 
-        inquire_prompt = "Based on the below prompt, what is this person's full name?\n\n'"+prompt+"'\n\nAnswer in as few characters as possible. If none, respond with 'None'."
+        inquire_prompt = "Based on the below prompt, what is this person's full name?\n\n'"+prompt+"'\n\nAnswer in as few characters as possible."
         human = person() 
         name = ai_response(inquire_prompt, networking=False, temperature=0).replace('\n',' ')
         human.name  = name.translate(str.maketrans("", "", string.punctuation))
+        print(human.name)
         print("NAME VERIFIED: "+str(human.verify()))
         print("NAME: "+human.name)      
     
@@ -47,6 +48,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
                 print("*** RETRIEVING USER ***")
                 # What can you tell me about 
                 human_info = human.get_info()
+                print(f"getting info for {human.name}:\n{human_info}")
                 # print("DATABASE (json_pull) RESPONSE",human_info)
                 
                 linked_in = ''
@@ -64,11 +66,11 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
                 else:
                     relevant_info = None
 
-                prompt = "Pretend you're an assistant for me. Based on their json file data below, can you briefly summarize this person?\n"+str(human_info)+'\n '+linked_in
+                prompt = f"Pretend you're an assistant for me. Based on their json file data below, can you briefly summarize this person?\n{human_info}\n{linked_in}"
                 
-            if first_word in ask_strings:
-                print("*** RETRIEVING USER ***")
-        # if first_word in ['delete']:
+            # if first_word in ask_strings:
+            #     print("*** RETRIEVING USER ***")
+            #     ai_response(f"What can you tell me about {human.name} based on the following?\n\n{human.get_info()}")
 
     # NOW RUN THE PROMPT:
     completions = openai.Completion.create(
