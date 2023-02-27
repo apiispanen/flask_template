@@ -42,19 +42,16 @@ def save_audio():
     # prompt = ' '.join([word['value'] for word in words if word])
     if len(prompt.split(' ')) > 1:
         print("YOUR PROMPT:", prompt.split(' '),  len(prompt))
-        response = ai_response(prompt, networking=True).replace('\n','')
+        response = ai_response(prompt, networking=True).replace('\n',' ')
     else:
         response = "How can I help you?"
     audioContent = tts_string(response)
     # do something with the audio data here
-
     return jsonify({"audioContent": audioContent, "airesponse":response})
-
 
 # if __name__ == "__main__":
 app.secret_key = 'mysecretkey'
 # app.config['TEMPLATES_AUTO_RELOAD'] = True
-
 
 API_KEY = os.getenv('API_KEY')
 
@@ -66,5 +63,3 @@ else:
     # FOR RUNNING ON LOCAL
     print("Running on Railway")
     app.run(debug=False, port=int(os.getenv("PORT", default=5000)))
-
-# ai_response("What are 5 words to describe a grouchy fucking pig?")

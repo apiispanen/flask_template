@@ -1,35 +1,29 @@
 // Implement a listener for speech segment updates
 window.onload=function(){
- 
+
+let audio = null;
 var button = document.getElementsByTagName("push-to-talk-button")[0];
 
 if (button){
 // SPACE BAR SUBSTITUTE FOR BUTTON PUSH
 document.addEventListener("keydown", (event) => {
+
   // Check if the currently focused element is a textarea element
   const focusedElement = document.activeElement;
   const isTextarea = focusedElement.tagName === "TEXTAREA";
-  
   if (event.key === ' ' && !isTextarea) {
+    
     event.preventDefault();
     button.click();
   }
 });
-
-document.addEventListener("keyup", (event) => {
-  if (event.key === ' ') {
-    button.release();
-  }
-});
-
 // END SPACE BAR SUBSTITUTE FOR BUTTON PUSH
 
 
 // NOW SPEECH SPEECH SPEEEEECCCHHH
 button.addEventListener("speechsegment", (e) => {
-  
-  const speechSegment = e.detail;
 
+  const speechSegment = e.detail;
       // OLD JS
       speechSegment.entities.forEach(entity => {
       
@@ -50,26 +44,31 @@ button.addEventListener("speechsegment", (e) => {
       })
 
 
-
-
-
-  // Check if the speech segment is the final segment
+  // Check if the speech segment is the final segment - AKA You're done talking!
   if (speechSegment.isFinal) {
     const words = speechSegment.words;
     const wordsString = speechSegment.words.map(word => word.value).join(' ');
 
-    // ADD TO PROMPT
-
+    // ADD TO PROMPT textarea
     const inputElement = document.querySelector('#response textarea');
-
-    // Set the value of the input element
     inputElement.value = wordsString;
-  
-    // Make POST request to save_audio endpoint
     save_audio(wordsString);
+
+    // save_audio(wordsString).then(audioSrc => {
+    //   // if there is already an audio object playing, pause it
+    //   if (audio !== null) {
+    //     audio.pause();
+    //   }
+    
+      // create a new audio object and play the audio
+    //   audio = new Audio(audioSrc);
+    //   audio.play();
+    // })
+    // .catch(error => {
+    //   console.error(error);
+    // });  
+
     }
-
-
   });
 
 
@@ -84,49 +83,43 @@ responseTextArea.addEventListener("keydown", function(event) {
     console.log(responseText);
     // call your desired function here
     var airesponse = save_audio(responseText);
+    // console.log("AI RESPONSE file:", airesponse, " end");
 
   }
 });
-function return_prompt(audio, response) {
-
-
-};
-
 
 // define the function that you want to perform
 function save_audio(words) {
+  return new Promise((resolve, reject) => {
+    let audioSrc = "";
+    fetch('/save_audio', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        words: words
+      })
+    }).then(response => response.json())
+      .then(data => {
+        const audioContent = data.audioContent;
+        audioSrc = `data:audio/mpeg;base64,${audioContent}`;
+        const airesponse = data.airesponse;
+        const airesponseTextArea = document.querySelector("#airesponse textarea");
+        airesponseTextArea.value = airesponse;
+        resolve(audioSrc); // resolve the promise with audioSrc
 
-  // code to perform the desired function goes here
-  return fetch('/save_audio', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      words: words
-    })
-  })  .then(response => response.json())
-  .then(data => {
-    const audioContent = data.audioContent;
-    const audioSrc = `data:audio/mpeg;base64,${audioContent}`;
-    const audio = new Audio(audioSrc);
-    const airesponse = data.airesponse;
-    console.log(airesponse);
-    const airesponseTextArea = document.querySelector("#airesponse textarea");
-    airesponseTextArea.value = airesponse;
-
-
-    audio.play();
-  })
-  .catch(error => {
-    console.error(error);
+        audio = new Audio(audioSrc);
+        audio.play();
+      })
+      .catch(error => {
+        console.error(error);
+        reject(error); // reject the promise with the error
+      });
+    console.log("Your query has been run!", audioSrc);
   });
-  
-  
-  
-    
-  console.log("Your function has been performed!");
 }
+
 };
 
 window.onload.resize=function() {
@@ -134,16 +127,16 @@ window.onload.resize=function() {
   $('.tbl-header').css({'padding-right':scrollWidth});
 };
 
-
 var hoverlog = document.getElementById("hoverlog");
 var log = document.getElementById("log");
 
+if (hoverlog){
 hoverlog.onclick=function(){
   $("#log").slideToggle( "slow", function() {
     // Animation complete.
   });
 
-}
+}};
 
 
 

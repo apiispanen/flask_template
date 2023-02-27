@@ -83,7 +83,6 @@ def json_update(lookupname, json_input, filename=None):
         closest_match = first_name_match + ' ' + last_name_match
         print("We are assuming '", lookupname, "' is", closest_match)
         name = closest_match
-
     except:
         print("No match found for ", name, "Adding new entry with JSON response: ",json_input)
         
@@ -119,13 +118,12 @@ def clean_sentence(sentence):
 # print(clean_sentence('Update Sam casey his favorite food are turkey'))
 
 # conversation_json = """{   "People":{
-#             "John Hoe": {
-#             "School": "Bunker Hill",
-#             "Location": "Lexington, MA",
+#             "Brad Shawford": {
+#             "School": "James Brown U",
 #             "Fondest Memory":"Swimming the English Channel",
 #             "Fun Facts":"Knows a thing or two about being incognito" }}}"""
 
-# json_update("John Hoe", conversation_json)
+# json_update("Brad Shawford", conversation_json)
 
 #  Sam Casey:
 
