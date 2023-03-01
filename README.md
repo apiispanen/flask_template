@@ -29,6 +29,15 @@ Autorization Scripts (not added to GH):
 - google.json - holds google authorization payload
 
 ![Networker Demo](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*1vw8y19iIVxi4UXhwbKLhA.png)
+<h2>How to Use the App</h2>
+      <p><ol><li>Push the microphone, spacebar to speak or enter into the prompt manually.</li>
+          <li>For your prompt, the first word you ask is important. Use the following as a guide:</li>
+        <ul><li><b>Update Strings</b> = "update",'edit', 'modify': This is a general "Upsert" function that will add fields to an existing user, or build out a new one. <br>Example Prompt: "Update Drew Piispanen - he likes vanilla ice cream." <br>Example Response: "Drew Piispanen has been updated"</li>
+      <li><b>General Strings</b> = 'who': This asks Networker to give general information about a person. <br>Example Prompt: "Who's Drew Piispanen?"<br>Example Response: "Drew Piispanen lives in Hershey, PA. He is studying data science, and is coding the 'Networker Application'. His favorite ice cream is cookie dough."</li>
+      <li><b>Reminder Strings</b> = 'remind': This will ask Networker to remind them about a specific field of this person. <br>Example Prompt: "Remind me, what's Drew Piispanen's favorite ice cream flavor?" <br>Example Response: "Drew's favorite ice cream flavor is cookie dough."</li></ul>
+      <li>Networker will respond with in the response textfield, to which the following prompt can audit the last response.</li>
+      </ol></p>
+
 
 Setbacks
 - Logic loops

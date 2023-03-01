@@ -8,67 +8,79 @@ else:
     from creds import API_KEY
     print('The API_KEY environment variable is not set.')
 
-import subprocess
-import sys
 import string
 
 from flask import session
 import openai
 import json
-from user_info import google_it, json_pull, json_update
 from user import person
 
 def ai_response(prompt, networking = None, previous_conversation=None, API_KEY = API_KEY, temperature =.5):
+    # OPEN AI CONFIG
     openai.api_key = API_KEY
     temperature = temperature
     model_engine = "text-davinci-003"
 
+    # LOAD IN THE UPDATE/REMINDER STRINGS
+    update_strings = ["update",'edit', 'modify']
+    general_strings = [ 'who']
+    reminder_strings = ['remind']
+    ask_strings = ["what"]
+
+
     if networking:
-        update_strings = ["update",'edit', 'modify']
-        reminder_strings = ["remind", 'who']
-        ask_strings = ["what"]
+        human = person() 
         first_word = prompt.split()[0].lower().translate(str.maketrans("", "", string.punctuation)).splitlines()[0]
 
-        inquire_prompt = "Based on the below prompt, what is this person's full name?\n\n'"+prompt+"'\n\nAnswer in as few characters as possible."
-        human = person() 
+        inquire_prompt = "Based on the below prompt, what is this person's full name who we are talking about?\n\n'"+prompt+"'\n\nAnswer in as few characters as possible."
         name = ai_response(inquire_prompt, networking=False, temperature=0).replace('\n',' ')
         human.name  = name.translate(str.maketrans("", "", string.punctuation))
         print(human.name)
-        print("NAME VERIFIED: "+str(human.verify()))
+        verified = human.verify()
+        print("NAME VERIFIED: "+str(verified))
+        # If not a human in our DB:
+        if not verified:
+            pass
         print("NAME: "+human.name)      
-    
-        if first_word in update_strings or first_word in reminder_strings or first_word in ask_strings:
+
+        if first_word in update_strings + general_strings + reminder_strings:
             prompt = prompt.replace(name, human.name)
             temperature = 0
             if first_word in update_strings:
                 print("*** UPDATING USER ***")
                 prompt = """Pretend you are my assistant, building a JSON file called "People" that is in the following rough format (comments in "[]"):\n\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this design, what fields and keys would you make out of the following dialog:""" + prompt+"\n\nAnswer in JSON only, and with facts you are certain about. Do not respond with null fields, and only add new fields as necessary."
-    
 
-            if first_word in reminder_strings:
+            elif first_word in general_strings:
                 print("*** RETRIEVING USER ***")
                 # What can you tell me about 
                 human_info = human.get_info()
                 print(f"getting info for {human.name}:\n{human_info}")
                 # print("DATABASE (json_pull) RESPONSE",human_info)
                 
-                linked_in = ''
-                if "linkedin" in prompt or 'linked in' in prompt:
-                    print("LINKEDIN FOUND")
-                    linked_in = " and here is their LinkedIn info: \n"+ google_it(name)
+                # # LinkedIn stuff, feel free to delete:
+                # linked_in = ''
+                # if "linkedin" in prompt or 'linked in' in prompt:
+                #     print("LINKEDIN FOUND")
+                #     linked_in = " and here is their LinkedIn info: \n"+ google_it(name)
 
-                keys =  ['School', 'Location', 'Company']
-                try:
-                    relevant_info = [human_info[key] for key in human_info.keys() if key in keys] 
-                except:
-                    relevant_info = []
-                if len(relevant_info)>0:
-                    print("relevant info: ", relevant_info)
-                else:
-                    relevant_info = None
+                # keys =  ['School', 'Location', 'Company']
+                # try:
+                #     relevant_info = [human_info[key] for key in human_info.keys() if key in keys] 
+                # except:
+                #     relevant_info = []
+                # if len(relevant_info)>0:
+                #     print("relevant info: ", relevant_info)
+                # else:
+                #     relevant_info = None
+                # # END LINKEDIN STUFF
 
-                prompt = f"Pretend you're an assistant for me. Based on their json file data below, can you briefly summarize this person?\n{human_info}\n{linked_in}"
-                
+                prompt = f"Pretend you're an assistant for me. Based on their json file data below, can you briefly summarize this person?\n{human_info}"
+            
+            elif first_word in reminder_strings:
+                # IDENTIFY FIELD OF INTEREST
+                human_info = human.get_info()
+                print(f"getting info for {human.name}:\n{human_info}")
+                prompt = f"Based on the user's json file below, {prompt}\n\n{human_info}"
             # if first_word in ask_strings:
             #     print("*** RETRIEVING USER ***")
             #     ai_response(f"What can you tell me about {human.name} based on the following?\n\n{human.get_info()}")
@@ -85,11 +97,11 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     )
 
     message = completions.choices[0].text
-    print("Prompt:", prompt)
+    print(f"Prompt:{prompt}")
     print("AI Response:", message)
     if networking and first_word in update_strings:
         print("to feed into json_update:\n",human.name, message)
-        human.json = message
+        human.json = message.strip()
         human.update()
         message = str(human.name)+" has been updated."
         print("******** JSON UPDATED ********")

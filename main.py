@@ -45,7 +45,7 @@ def save_audio():
 
     if len(prompt.split(' ')) > 1:
         print("YOUR PROMPT:", prompt.split(' '),  len(prompt))
-        response = ai_response(prompt, networking=True).replace('\n',' ')
+        response = ai_response(prompt, networking=True).strip()
         print("AI response run")
     # ELSE, REDIRECT
     else:

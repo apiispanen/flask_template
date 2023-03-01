@@ -69,7 +69,12 @@ responseTextArea.addEventListener("keydown", function(event) {
     console.log(responseText);
     // call your desired function here
     // var airesponse = save_audio(responseText);
-    var speechtest = save_audio(responseText);
+
+    const e = document.querySelector("#brand");
+    var preprompt = e.options[e.selectedIndex].value;
+
+    console.log(preprompt);
+    var airesponse = save_audio(preprompt.concat(responseText));
     // console.log("AI RESPONSE file:", airesponse, " end");
 
   }
