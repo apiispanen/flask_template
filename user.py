@@ -53,6 +53,28 @@ class person():
         return info
 
 
+
+class dialog():
+    # DIALOG CLASS: New conversation, new question, new response. Can be used to retrie
+    def __init__(self) -> None:
+        pass
+
+
+class Session():
+    # SESSION CLASS: Session ID, 
+    def __init__(self) -> None:
+        pass
+
+    def respond():
+        # Sends a response to the response prompt textarea. 
+        pass
+
+    def speak():
+        # Sends a response to the audio portion of the console. 
+        pass
+        
+
+
 # user_js = conversation_json = """{   "People":{
 #             "John Hooligan": {
 #             "School": "James Brown U",

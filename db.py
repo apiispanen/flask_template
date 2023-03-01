@@ -39,14 +39,33 @@ def update_person(name, json_input, badname='', client=client):
     collection = db['people']
     name = str(name)
     for key in json_input:
-        collection.update_one({"People": {"$exists": True}}, {"$set": {"People."+name+"."+str(key): str(json_input[key])}})
-        print(key +" : "+ json_input[key])
+        if json_input[key] != "" and json_input[key]:  
+            collection.update_one({"People": {"$exists": True}}, {"$set": {"People."+name+"."+str(key): str(json_input[key])}})
+            print(key +" : "+ json_input[key])
 
     # If doing user-specific DBs, do:
     # collection.insert({"People": {"$exists": True}}, {"$set": {"People."+name+"."+str(key): str(json_input[key])}}) 
     return name+" Updated"
 
 
+import spacy
+
+# Load the spaCy model
+nlp = spacy.load('en_core_web_sm')
+
+def return_entities(text, nlp=nlp):
+    # Process the text with spaCy
+    doc = nlp(text)
+    # print(spacy.explain(text))
+    # Extract the named entities and their labels
+    entities = {ent.label_: ent.text  for ent in doc.ents}
+
+    # Print the named entities and their labels
+    print(entities)
+
+text = "I spoke with Sam Casey, he works at Mercury and is a software developer. Last time we spoke, we discussed apples and peaches. He has a pet cat, and a dog named whiskers. His favorite color is green, and his interests include skiing and hiking."
+
+return_entities(text)
 # conversation_json = """{   "People":{
 #             "John Doe": {
 #             "School": "Bunker Hill",

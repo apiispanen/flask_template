@@ -72,6 +72,7 @@ def json_update(lookupname, json_input, filename=None):
         data = get_people()
     json_input = get_json(json_input)
     name = lookupname
+    # GET THE LIST OF ALREADY EXISTING NAMES IN DB
     name_list = list(data["People"].keys())
     
     # LOOK UP ANY FIRST NAMES THAT MATCH

@@ -54,20 +54,6 @@ button.addEventListener("speechsegment", (e) => {
     inputElement.value = wordsString;
     save_audio(wordsString);
 
-    // save_audio(wordsString).then(audioSrc => {
-    //   // if there is already an audio object playing, pause it
-    //   if (audio !== null) {
-    //     audio.pause();
-    //   }
-    
-      // create a new audio object and play the audio
-    //   audio = new Audio(audioSrc);
-    //   audio.play();
-    // })
-    // .catch(error => {
-    //   console.error(error);
-    // });  
-
     }
   });
 
@@ -82,11 +68,45 @@ responseTextArea.addEventListener("keydown", function(event) {
     const responseText = responseTextArea.value;
     console.log(responseText);
     // call your desired function here
-    var airesponse = save_audio(responseText);
+    // var airesponse = save_audio(responseText);
+    var speechtest = save_audio(responseText);
     // console.log("AI RESPONSE file:", airesponse, " end");
 
   }
 });
+
+
+
+// function say_audio(words) {
+//   return new Promise((resolve, reject) => {
+//     let audioSrc = "";
+//     fetch('/say_audio', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({
+//         words: words
+//       })
+//     }).then(response => response.json())
+//       .then(data => {
+//         const audioContent = data.audioContent;
+//         audioSrc = `data:audio/mpeg;base64,${audioContent}`;
+//         const airesponse = data.airesponse;
+//         const airesponseTextArea = document.querySelector("#airesponse textarea");
+//         airesponseTextArea.value = airesponse;
+//         resolve(audioSrc); // resolve the promise with audioSrc
+
+//         audio = new Audio(audioSrc);
+//         audio.play();
+//       })
+//       .catch(error => {
+//         console.error(error);
+//         reject(error); // reject the promise with the error
+//       });
+//     console.log("Your query has been run!", audioSrc);
+//   });
+// }
 
 // define the function that you want to perform
 function save_audio(words) {

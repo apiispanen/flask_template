@@ -12,6 +12,7 @@ import subprocess
 import sys
 import string
 
+from flask import session
 import openai
 import json
 from user_info import google_it, json_pull, json_update
@@ -20,8 +21,8 @@ from user import person
 def ai_response(prompt, networking = None, previous_conversation=None, API_KEY = API_KEY, temperature =.5):
     openai.api_key = API_KEY
     temperature = temperature
-    model_engine = "text-davinci-002"
-    
+    model_engine = "text-davinci-003"
+
     if networking:
         update_strings = ["update",'edit', 'modify']
         reminder_strings = ["remind", 'who']
@@ -41,7 +42,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
             temperature = 0
             if first_word in update_strings:
                 print("*** UPDATING USER ***")
-                prompt = """Pretend you are my assistant, building a JSON file called "People" that is in the following rough format (comments in "[]"):\n\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this design, what fields and keys would you make out of the following dialog:""" + prompt+"\n\nAnswer in JSON only, and with facts you are certain about."
+                prompt = """Pretend you are my assistant, building a JSON file called "People" that is in the following rough format (comments in "[]"):\n\n {"People": {"[PERSONS NAME]": {"School": "[SCHOOL]","Location": "[LOCATION]","Interests":"[INTEREST]", "Fun Facts":"[FUN FACTS]", "[OTHER RELEVANT FIELD NAME]":"[OTHER DATA]" }}}  \n\nBased on this design, what fields and keys would you make out of the following dialog:""" + prompt+"\n\nAnswer in JSON only, and with facts you are certain about. Do not respond with null fields, and only add new fields as necessary."
     
 
             if first_word in reminder_strings:
