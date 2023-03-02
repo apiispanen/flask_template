@@ -23,25 +23,25 @@ document.addEventListener("keydown", (event) => {
 // NOW SPEECH SPEECH SPEEEEECCCHHH
 button.addEventListener("speechsegment", (e) => {
 
-  const speechSegment = e.detail;
-      // OLD JS
-      speechSegment.entities.forEach(entity => {
+  // const speechSegment = e.detail;
+  //     // // OLD JS
+  //     speechSegment.entities.forEach(entity => {
       
-        let select = document.getElementById(entity.type);  
-        console.log(select);
-        let options = Array
-          .from(select.getElementsByTagName("option"))
-          .map(option => option.innerHTML);
+  //       let select = document.getElementById(entity.type);  
+  //       console.log(select);
+  //       let options = Array
+  //         .from(select.getElementsByTagName("option"))
+  //         .map(option => option.innerHTML);
         
-        const found = options
-          .find(option => 
-                entity
-                .value
-                .toLowerCase()
-                .startsWith(option.toLowerCase()));
+  //       const found = options
+  //         .find(option => 
+  //               entity
+  //               .value
+  //               .toLowerCase()
+  //               .startsWith(option.toLowerCase()));
         
-        if (found) select.value = found;
-      })
+  //       if (found) select.value = found;
+  //     })
 
 
   // Check if the speech segment is the final segment - AKA You're done talking!

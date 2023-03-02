@@ -45,8 +45,10 @@ Setbacks
 - Historical data not easily found.
 
 Needs: 
-- Better human recognition
-- Memory virtually - via MongoDB
+- Better name identification
+- CRM backend application 
+- Connection Function:
+ 
 <br><br>
 For more information, see our [Medium Post](https://medium.com/@andrewpiispanen/the-networker-project-cc8765c25f50).
 <br><br>

@@ -27,7 +27,6 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
     reminder_strings = ['remind']
     ask_strings = ["what"]
 
-
     if networking:
         human = person() 
         first_word = prompt.split()[0].lower().translate(str.maketrans("", "", string.punctuation)).splitlines()[0]
