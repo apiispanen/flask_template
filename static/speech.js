@@ -23,7 +23,7 @@ document.addEventListener("keydown", (event) => {
 // NOW SPEECH SPEECH SPEEEEECCCHHH
 button.addEventListener("speechsegment", (e) => {
 
-  // const speechSegment = e.detail;
+  const speechSegment = e.detail;
   //     // // OLD JS
   //     speechSegment.entities.forEach(entity => {
       
