@@ -15,11 +15,14 @@ import openai
 import json
 from user import person
 
-def ai_response(prompt, networking = None, previous_conversation=None, API_KEY = API_KEY, temperature =.5):
+openai.api_key = API_KEY
+
+def ai_response(prompt, networking = None, previous_conversation=None, temperature =.5):
     # OPEN AI CONFIG
-    openai.api_key = API_KEY
     temperature = temperature
     model_engine = "text-davinci-003"
+    # model_engine = "gpt-3.5-turbo"
+
 
     # LOAD IN THE UPDATE/REMINDER STRINGS
     update_strings = ["update",'edit', 'modify']
@@ -85,7 +88,7 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
             #     ai_response(f"What can you tell me about {human.name} based on the following?\n\n{human.get_info()}")
 
     # NOW RUN THE PROMPT:
-    completions = openai.Completion.create(
+    completions = openai.chatCompletion.create(
         engine=model_engine,
         prompt=prompt,
         max_tokens=200,
@@ -124,3 +127,17 @@ def ai_response(prompt, networking = None, previous_conversation=None, API_KEY =
 # print(conversation)
 
 # save_conversation(prompt, conversation)
+def gpt_response(prompt):
+    print('hello')
+    response = openai.ChatCompletion.create( 
+    openai.api_key,
+    model="gpt-3.5-turbo-0301",
+    messages=[{"role": "user", "content": prompt}],
+    max_tokens=1024,
+    n=1,
+    temperature=0.5)
+    print(response["choices"][0]["message"]["content"])
+
+
+
+gpt_response("Previous question: how can I store context for your understanding?")

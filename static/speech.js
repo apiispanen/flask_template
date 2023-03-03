@@ -10,11 +10,14 @@ document.addEventListener("keydown", (event) => {
 
   // Check if the currently focused element is a textarea element
   const focusedElement = document.activeElement;
+  const isMainarea = focusedElement.tagName === "main";
   const isTextarea = focusedElement.tagName === "TEXTAREA";
-  if (event.key === ' ' && !isTextarea) {
+
+  if (event.key === ' ' && !isTextarea && isMainarea) {
     
     event.preventDefault();
     button.click();
+    
   }
 });
 
