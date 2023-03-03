@@ -127,17 +127,15 @@ def ai_response(prompt, networking = None, previous_conversation=None, temperatu
 # print(conversation)
 
 # save_conversation(prompt, conversation)
-def gpt_response(prompt):
-    print('hello')
-    response = openai.ChatCompletion.create( 
-    openai.api_key,
-    model="gpt-3.5-turbo-0301",
-    messages=[{"role": "user", "content": prompt}],
-    max_tokens=1024,
-    n=1,
-    temperature=0.5)
-    print(response["choices"][0]["message"]["content"])
+# def gpt_response(prompt):
+#     print('hello')
+#     response = openai.ChatCompletion.create( 
+#     openai.api_key,
+#     model="gpt-3.5-turbo-0301",
+#     messages=[{"role": "user", "content": prompt}],
+#     max_tokens=1024,
+#     n=1,
+#     temperature=0.5)
+#     print(response["choices"][0]["message"]["content"])
 
 
-
-gpt_response("Previous question: how can I store context for your understanding?")
