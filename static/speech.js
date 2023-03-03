@@ -17,7 +17,6 @@ document.addEventListener("keydown", (event) => {
     button.click();
   }
 });
-// END SPACE BAR SUBSTITUTE FOR BUTTON PUSH
 
 
 // NOW SPEECH SPEECH SPEEEEECCCHHH
@@ -162,7 +161,6 @@ hoverlog.onclick=function(){
   });
 
 }};
-
 
 
 }
